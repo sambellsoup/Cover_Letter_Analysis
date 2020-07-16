@@ -39,3 +39,4 @@ The user will upload a document (resume or cover letter). Apache Tika is used to
 - [ ] Deploy interactive website
 - [ ] Develop summary visualizations
 - [ ] Develop deep learning method of implementation
+- [ ] Teach computer how to interpret and understand resume text data
