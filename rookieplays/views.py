@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
+from django.core.files.storage import FileSystemStorage
+# from django.views.generic import TemplateView
 
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
@@ -10,6 +13,15 @@ from .forms import TopicForm, EntryForm
 def index(request):
     """Rookieplay's Job Matchmaking"""
     return render(request, 'rookieplays/index.html')
+
+def upload(request):
+    context = {}
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        context['url'] = fs.url(name)
+    return render(request, 'rookieplays/upload.html', context)
 
 @login_required
 def topics(request):

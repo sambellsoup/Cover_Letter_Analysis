@@ -1,5 +1,12 @@
 {% extends "rookieplays/base.html" %}
 
 {% block content %}
-  <p>Rookie Play helps you find the jobs that match your skillset, for any skills and any jobs.</p>
+  <p>RookiePlay lets your resume speak for itself</p>
+  <h3>Upload a resume or cover letter.</h3>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="document">
+    <button type="submit">Upload file</button>
+    </form>
+    <p>**Sensitive data, like personal contact information, is not needed and should be removed from the document prior to uploading.**</p>
 {% endblock content %}

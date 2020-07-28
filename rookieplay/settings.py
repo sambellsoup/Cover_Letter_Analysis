@@ -124,3 +124,5 @@ STATIC_URL = '/static/'
 # My settings
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/users/login/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'documents')
+MEDIA_URL = '/documents/'
