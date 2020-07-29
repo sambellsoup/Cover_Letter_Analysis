@@ -8,5 +8,8 @@
     <input type="file" name="document">
     <button type="submit">Upload file</button>
     </form>
+  {% if url %}
+    <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
+  {% endif %}
     <p>**Sensitive data, like personal contact information, is not needed and should be removed from the document prior to uploading.**</p>
 {% endblock content %}

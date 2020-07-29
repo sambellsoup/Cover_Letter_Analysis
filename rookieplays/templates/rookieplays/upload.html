@@ -2,7 +2,8 @@
 {% extends 'rookieplays/base.html' %}
 
 {% block content %}
-<h2>Upload</h2>
+<p>RookiePlay lets your resume speak for itself</p>
+<h2>Upload a resume or cover letter.</h2>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <input type="file" name="document">
@@ -11,4 +12,5 @@
 {% if url %}
   <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
 {% endif %}
+<p>**Sensitive data, like personal contact information, is not needed and should be removed from the document prior to uploading.**</p>
 {% endblock %}

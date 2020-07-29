@@ -12,12 +12,14 @@ from .forms import TopicForm, EntryForm
 # Create your views here.
 def index(request):
     """Rookieplay's Job Matchmaking"""
-    return render(request, 'rookieplays/index.html')
+    return render(request, 'rookieplays/upload.html')
 
 def upload(request):
     context = {}
     if request.method == 'POST':
         uploaded_file = request.FILES['document']
+        print(uploaded_file.name)
+        print(uploaded_file.size)
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
