@@ -22,6 +22,8 @@ from .forms import TopicForm, EntryForm
 # from sklearn.metrics.pairwise import cosine_similarity
 # from sklearn.feature_extraction.text import CountVectorizer
 
+
+
 # Create your views here.
 def index(request):
     """Rookieplay's Job Matchmaking"""
