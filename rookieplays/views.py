@@ -25,6 +25,10 @@ def upload(request):
         context['url'] = fs.url(name)
     return render(request, 'rookieplays/upload.html', context)
 
+def analyze(request):
+    uploaded_file = request.FILES['document']
+
+
 @login_required
 def topics(request):
     """Show a single topic and all its entries."""
