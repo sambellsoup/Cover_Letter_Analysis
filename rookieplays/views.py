@@ -9,6 +9,19 @@ from django.core.files.storage import FileSystemStorage
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 
+# recommendation packages
+# from .text_processing import *
+# from io import BytesIO
+# import base64
+# import matplotlib
+# matplotlib.use("Agg")
+# import matplotlib.pyplot as plt
+# import pandas as pd
+# from rake_nltk import Rake
+# from tika import parser
+# from sklearn.metrics.pairwise import cosine_similarity
+# from sklearn.feature_extraction.text import CountVectorizer
+
 # Create your views here.
 def index(request):
     """Rookieplay's Job Matchmaking"""
@@ -25,9 +38,21 @@ def upload(request):
         context['url'] = fs.url(name)
     return render(request, 'rookieplays/upload.html', context)
 
-def analyze(request):
-    uploaded_file = request.FILES['document']
-
+# def analyze(request):
+    # uploaded_file = request.FILES['document']
+    # text_processing.document_to_text(uploaded_file)
+    # text_processing.text_to_bagofwords(document_df)
+    # document_df = text_processing.compile_document_text()
+    # title = 'resume'
+    # cosine_sim = text_processing.vectorize_text()
+    # text_processing.recommend_100(title, cosine_sim)
+    # categories = text_processing.top_100_categories()
+    # text_processing.freq(categories)
+    # text_processing.viz_data()
+    # top10_recs = text_processing.format_recommendation()
+    # strength_summary = text_processing.make_viz()
+    # context = {'Top 10 Job Title Recommendations': top10_recs, 'Strength Summary': strength_summary}
+    # return render(request, 'rookieplays/upload.html', context)
 
 @login_required
 def topics(request):
