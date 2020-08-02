@@ -28,9 +28,10 @@ SECRET_KEY = '1y%6yu_ofkz(q*cu+w!3@5nu%+o7x!7p=yi)wc%ifc!daepk3&'
 
 
 
-ALLOWED_HOSTS = [ 'django-env.eba-gm8xaypj.us-west-2.elasticbeanstalk.com',
-                    'localhost',
-                    'intense-everglades-67702.herokuapp.com']
+# ALLOWED_HOSTS = [ 'django-env.eba-gm8xaypj.us-west-2.elasticbeanstalk.com',
+                    # 'localhost',
+                    # 'intense-everglades-67702.herokuapp.com']
+                    # 'intense-everglades-67702.herokuapp.com',
 
 
 
