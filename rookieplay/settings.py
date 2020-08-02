@@ -27,7 +27,8 @@ DEBUG = True
 
 
 ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = [ 'django-env.eba-gm8xaypj.us-west-2.elasticbeanstalk.com' ]
+ALLOWED_HOSTS = [ 'django-env.eba-gm8xaypj.us-west-2.elasticbeanstalk.com' ]
+
 
 
 # Application definition
