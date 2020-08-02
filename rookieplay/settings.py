@@ -28,7 +28,8 @@ DEBUG = True
 
 
 ALLOWED_HOSTS = [ 'django-env.eba-gm8xaypj.us-west-2.elasticbeanstalk.com',
-                    'localhost',]
+                    'localhost',
+                    'intense-everglades-67702.herokuapp.com',]
 
 
 
@@ -129,7 +130,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_TMP = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
+os.makedirs(STATIC_TMP, exist_ok=True)
+os.makedirs(STATIC_ROOT, exist_ok=True)
+
 
 # My settings
 LOGOUT_REDIRECT_URL = '/'
