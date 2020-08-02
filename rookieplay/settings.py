@@ -26,8 +26,9 @@ SECRET_KEY = '1y%6yu_ofkz(q*cu+w!3@5nu%+o7x!7p=yi)wc%ifc!daepk3&'
 DEBUG = True
 
 
-ALLOWED_HOSTS = []
-ALLOWED_HOSTS = [ 'django-env.eba-gm8xaypj.us-west-2.elasticbeanstalk.com' ]
+
+ALLOWED_HOSTS = [ 'django-env.eba-gm8xaypj.us-west-2.elasticbeanstalk.com',
+                    'localhost',]
 
 
 
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -140,14 +142,28 @@ BOOTSTRAP3 = {
 }
 
 # Heroku settings
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+cwd = os.getcwd()
+if cwd == '/app' or cwd[:4] == '/tmp':
+    import dj_database_url
+    DATABASES = {
+    'default': dj_database_url.config(default='postgres://localhost')
+    }
 
+    # Honor the 'X-Forwarded-Proto' header for request.is_secure().
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    # Allow all host headers
+    ALLOWED_HOSTS = ['*']
+
+    # Static asset configuration
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    STATIC_ROOT = 'staticfiles'
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 # STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = (
-    # os.path.join(BASE_DIR, 'static'),
-# )
