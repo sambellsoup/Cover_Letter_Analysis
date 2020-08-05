@@ -27,7 +27,7 @@ from .forms import TopicForm, EntryForm
 # Create your views here.
 def index(request):
     """Rookieplay's Job Matchmaking"""
-    return render(request, 'rookieplays/upload.html')
+    return render(request, 'rookieplays/upload.html', context)
 
 def upload(request):
     context = {}
