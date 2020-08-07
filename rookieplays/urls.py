@@ -1,4 +1,4 @@
-"""Defines URL patterns for rookieplays"""
+"""Defines URL patterns for Rookieplay App document analytics functionality"""
 
 from django.conf.urls import url
 from . import views
@@ -7,7 +7,7 @@ from django.urls import path
 app_name = 'rookieplays'
 urlpatterns = [
     # Home page
-    url(r'^$', views.index, name='index'),
+    url(r'^$', views.upload, name='upload'),
 
     # Show all topics
     url(r'^topics/$', views.topics, name='topics'),
@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'^edit_entry/(?P<entry_id>\d+)/$', views.edit_entry, name='edit_entry'),
 
     #Upload page.
-    path('upload/', views.upload, name='upload')
+    # path('upload/', views.upload, name='upload')
 ]

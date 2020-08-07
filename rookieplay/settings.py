@@ -27,8 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost',
                 'rookieplay.eba-tjtu63iq.us-east-1.elasticbeanstalk.com',
-                '172.31.29.164',
-                'rookieplay.eba-tjtu63iq.us-east-1.elasticbeanstalk.com']
+                '172.31.29.164',]
 
 
 # Application definition
