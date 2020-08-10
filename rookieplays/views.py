@@ -36,17 +36,18 @@ def upload(request):
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
-        document_to_text(uploaded_file)
-        text_to_bagofwords(document_df)
-        document_df = compile_document_text()
-        title = 'resume'
-        cosine_sim = vectorize_text()
-        recommend_100(title, cosine_sim)
-        categories = top_100_categories()
-        freq(categories)
-        viz_data()
-        top10_recs = format_recommendations()
-        strength_summary = make_viz()
+
+        # document_to_text(uploaded_file)
+        # text_to_bagofwords(document_df)
+        # document_df = compile_document_text()
+        # title = 'resume'
+        # cosine_sim = vectorize_text()
+        # recommend_100(title, cosine_sim)
+        # categories = top_100_categories()
+        # freq(categories)
+        # viz_data()
+        # top10_recs = format_recommendations()
+        # strength_summary = make_viz()
     return render(request, 'rookieplays/upload.html', context)
 
 def analyze(request):
