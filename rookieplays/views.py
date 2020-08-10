@@ -10,17 +10,17 @@ from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 
 # recommendation packages
-# from .text_processing import *
+from .text_processing import document_to_text, compile_document_text, text_to_bagofwords, join_and_condense, vectorize_text, recommend_100, format_recommendations, top_100_categories, freq, viz_data, make_viz
 # from io import BytesIO
 # import base64
-# import matplotlib
-# matplotlib.use("Agg")
-# import matplotlib.pyplot as plt
-# import pandas as pd
-# from rake_nltk import Rake
-# from tika import parser
-# from sklearn.metrics.pairwise import cosine_similarity
-# from sklearn.feature_extraction.text import CountVectorizer
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import pandas as pd
+from rake_nltk import Rake
+from tika import parser
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import CountVectorizer
 
 
 
@@ -33,28 +33,37 @@ def upload(request):
     context = {}
     if request.method == 'POST':
         uploaded_file = request.FILES['document']
-        print(uploaded_file.name)
-        print(uploaded_file.size)
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
+        document_to_text(uploaded_file)
+        text_to_bagofwords(document_df)
+        document_df = compile_document_text()
+        title = 'resume'
+        cosine_sim = vectorize_text()
+        recommend_100(title, cosine_sim)
+        categories = top_100_categories()
+        freq(categories)
+        viz_data()
+        top10_recs = format_recommendations()
+        strength_summary = make_viz()
     return render(request, 'rookieplays/upload.html', context)
 
-# def analyze(request):
-    # uploaded_file = request.FILES['document']
-    # text_processing.document_to_text(uploaded_file)
-    # text_processing.text_to_bagofwords(document_df)
-    # document_df = text_processing.compile_document_text()
-    # title = 'resume'
-    # cosine_sim = text_processing.vectorize_text()
-    # text_processing.recommend_100(title, cosine_sim)
-    # categories = text_processing.top_100_categories()
-    # text_processing.freq(categories)
-    # text_processing.viz_data()
-    # top10_recs = text_processing.format_recommendation()
-    # strength_summary = text_processing.make_viz()
-    # context = {'Top 10 Job Title Recommendations': top10_recs, 'Strength Summary': strength_summary}
-    # return render(request, 'rookieplays/upload.html', context)
+def analyze(request):
+    uploaded_file = request.FILES['document']
+    document_to_text(uploaded_file)
+    text_to_bagofwords(document_df)
+    document_df = compile_document_text()
+    title = 'resume'
+    cosine_sim = vectorize_text()
+    recommend_100(title, cosine_sim)
+    categories = top_100_categories()
+    freq(categories)
+    viz_data()
+    top10_recs = format_recommendation()
+    strength_summary = make_viz()
+    context = {'Top 10 Job Title Recommendations': top10_recs, 'Strength Summary': strength_summary}
+    return render(request, 'rookieplays/upload.html', context)
 
 @login_required
 def topics(request):
