@@ -22,6 +22,8 @@ from tika import parser
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 
+from pathlib import Path
+
 
 
 # Create your views here.
@@ -36,19 +38,23 @@ def upload(request):
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
-
-        # document_to_text(uploaded_file)
-        # text_to_bagofwords(document_df)
-        # document_df = compile_document_text()
-        # title = 'resume'
-        # cosine_sim = vectorize_text()
-        # recommend_100(title, cosine_sim)
-        # categories = top_100_categories()
-        # freq(categories)
-        # viz_data()
-        # top10_recs = format_recommendations()
-        # strength_summary = make_viz()
+        data_folder = Path("C:/Users/sambe/Projects/Cover_Letter_Analysis/data/documents/")
+        file_path = str(data_folder) + '\\'+  uploaded_file.name
+        print(file_path)
+        analyze(file_path)
     return render(request, 'rookieplays/upload.html', context)
+
+def delete_document(request, pk):
+    if request.method == 'POST':
+        document = document.objects.get(pk=pk)
+        document.delete()
+    return redirect('document_list')
+
+def document_list(request):
+    return render(request, 'document_list.html')
+
+def upload_document(request):
+    return render(request, 'upload_document.html')
 
 def analyze(request):
     uploaded_file = request.FILES['document']

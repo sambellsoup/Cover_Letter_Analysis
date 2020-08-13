@@ -29,3 +29,11 @@ class Entry(models.Model):
             return self.text[:50] + "..."
         else:
             return self.text[:50]
+
+class Document(models.Model):
+    """Document uploaded by user to be analyzed"""
+    title = models.CharField(max_length=100)
+    pdf = models.FileField(upload_to='documents/')
+
+    def __str__(self):
+        return self.title
