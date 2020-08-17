@@ -41,7 +41,7 @@ def upload(request):
         data_folder = Path("C:/Users/sambe/Projects/Cover_Letter_Analysis/data/documents/")
         file_path = str(data_folder) + '\\'+  uploaded_file.name
         print(file_path)
-        text = document_to_text(file_path)
+        text = document_to_text(document_path)
         #     print("Extracting text from document...")
         basic_documentdf = compile_document_text(text)
         #     print("Creating dataframe...")
@@ -53,17 +53,9 @@ def upload(request):
         #     print("Calculating similarities...")
         recommended_jobs = recommend_100('resume', cosine_sim)
         #     print("Retrieving top recommendations...")
-        top10 = format_recommendations(recommended_jobs)
-        #     print("Formatting top recommendations...")
-        context['top10'] = str(top10)
-        category_list = top_100_categories(recommended_jobs)
-        #     print("Retrieving relevant job categories...")
-        frequency = freq(category_list)
-        #     print("Calculating the most common job categories...")
-        names, size = viz_data(category_list, frequency)
-        #     print("Compiling data...")
-        strength_summary = make_viz(names, size)
-    return render(request, 'rookieplays/upload.html', context)
+        recommendations = format_recommendations(recommended_jobs)
+        context['recommendations'] = recommendations
+    return render(request, 'rookieplays/recs.html', context)
 
 def delete_document(request, pk):
     if request.method == 'POST':
