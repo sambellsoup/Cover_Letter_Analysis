@@ -10,7 +10,7 @@ from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 
 # recommendation packages
-from .text_processing import document_to_text, compile_document_text, text_to_bagofwords, join_and_condense, vectorize_text, recommend_100, format_recommendations, top_100_categories, freq, viz_data, make_viz
+from .text_processing import document_to_text, compile_document_text, text_to_bagofwords, join_and_condense, vectorize_text, recommend_100, format_recommendations, top_100_categories, freq, viz_data, make_viz, analyze
 # from io import BytesIO
 # import base64
 import matplotlib
@@ -41,7 +41,28 @@ def upload(request):
         data_folder = Path("C:/Users/sambe/Projects/Cover_Letter_Analysis/data/documents/")
         file_path = str(data_folder) + '\\'+  uploaded_file.name
         print(file_path)
-        analyze(file_path)
+        text = document_to_text(file_path)
+        #     print("Extracting text from document...")
+        basic_documentdf = compile_document_text(text)
+        #     print("Creating dataframe...")
+        verbose_documentdf = text_to_bagofwords(basic_documentdf)
+        #     print("Extracting key words from text...")
+        recommend_df = join_and_condense(verbose_documentdf)
+        #     print("Compiling data...")
+        cosine_sim = vectorize_text(recommend_df)
+        #     print("Calculating similarities...")
+        recommended_jobs = recommend_100('resume', cosine_sim)
+        #     print("Retrieving top recommendations...")
+        top10 = format_recommendations(recommended_jobs)
+        #     print("Formatting top recommendations...")
+        context['top10'] = str(top10)
+        category_list = top_100_categories(recommended_jobs)
+        #     print("Retrieving relevant job categories...")
+        frequency = freq(category_list)
+        #     print("Calculating the most common job categories...")
+        names, size = viz_data(category_list, frequency)
+        #     print("Compiling data...")
+        strength_summary = make_viz(names, size)
     return render(request, 'rookieplays/upload.html', context)
 
 def delete_document(request, pk):
@@ -56,21 +77,21 @@ def document_list(request):
 def upload_document(request):
     return render(request, 'upload_document.html')
 
-def analyze(request):
-    uploaded_file = request.FILES['document']
-    document_to_text(uploaded_file)
-    text_to_bagofwords(document_df)
-    document_df = compile_document_text()
-    title = 'resume'
-    cosine_sim = vectorize_text()
-    recommend_100(title, cosine_sim)
-    categories = top_100_categories()
-    freq(categories)
-    viz_data()
-    top10_recs = format_recommendation()
-    strength_summary = make_viz()
-    context = {'Top 10 Job Title Recommendations': top10_recs, 'Strength Summary': strength_summary}
-    return render(request, 'rookieplays/upload.html', context)
+# def analyze(request):
+    # uploaded_file = request.FILES['document']
+    # document_to_text(uploaded_file)
+    # text_to_bagofwords(document_df)
+    # document_df = compile_document_text()
+    # title = 'resume'
+    # cosine_sim = vectorize_text()
+    # recommend_100(title, cosine_sim)
+    # categories = top_100_categories()
+    # freq(categories)
+    # viz_data()
+    # top10_recs = format_recommendation()
+    # strength_summary = make_viz()
+    # context = {'Top 10 Job Title Recommendations': top10_recs, 'Strength Summary': strength_summary}
+    # return render(request, 'rookieplays/upload.html', context)
 
 @login_required
 def topics(request):

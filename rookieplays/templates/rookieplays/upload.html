@@ -2,6 +2,7 @@
 {% extends 'rookieplays/base.html' %}
 
 {% block content %}
+
 <p>RookiePlay lets your resume speak for itself</p>
 <h2>Upload a resume or cover letter.</h2>
 <form method="post" enctype="multipart/form-data">
@@ -11,7 +12,6 @@
 {% if url %}
   <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
 {% endif %}
-<button type="submit">Analyze</button>
 </form>
 
 {% endblock %}
