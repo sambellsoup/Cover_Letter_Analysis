@@ -1,0 +1,20 @@
+
+{% extends 'rookieplays/base.html' %}
+
+{% block content %}
+
+<p>RookiePlay lets your resume speak for itself</p>
+<h2>Upload another document.</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="file" name="document">
+  <button type="submit">Upload & Analyze</button>
+{% if url %}
+  <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
+{% endif %}
+{% for rec in recommendations %}
+  {{rec}}<br>
+{% endfor %}
+</form>
+
+{% endblock %}
