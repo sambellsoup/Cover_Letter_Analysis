@@ -10,7 +10,7 @@ from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 
 # recommendation packages
-from .text_processing import document_to_text, compile_document_text, text_to_bagofwords, join_and_condense, vectorize_text, recommend_100, format_recommendations, top_100_categories, freq, viz_data, make_viz, analyze
+from .text_processing import document_to_text, compile_document_text, text_to_bagofwords, join_and_condense, vectorize_text, recommend_100, format_recommendations, top_100_categories, freq, viz_data, make_viz, analyze, final_rec
 # from io import BytesIO
 # import base64
 import matplotlib
@@ -29,7 +29,23 @@ from pathlib import Path
 # Create your views here.
 def index(request):
     """Rookieplay's Job Matchmaking"""
-    return render(request, 'rookieplays/upload.html')
+    context = {}
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        context['url'] = fs.url(name)
+        data_folder = Path("C:/Users/sambe/Projects/Cover_Letter_Analysis/data/documents/")
+        file_path = str(data_folder) + '\\' +  uploaded_file.name
+        # print(file_path)
+        document_path = file_path
+        recommendations = final_rec(file_path)
+        context['recommendations'] = recommendations
+        # print("Recommendations is a " + str(type(recommendations)))
+        # print("This is the recommendations: " + str(recommendations))
+        return render(request, 'rookieplays/upload.html')
+    else:
+        return render(request, 'rookieplays/index.html', context)
 
 def upload(request):
     context = {}
@@ -40,22 +56,12 @@ def upload(request):
         context['url'] = fs.url(name)
         data_folder = Path("C:/Users/sambe/Projects/Cover_Letter_Analysis/data/documents/")
         file_path = str(data_folder) + '\\'+  uploaded_file.name
-        print(file_path)
-        text = document_to_text(document_path)
-        #     print("Extracting text from document...")
-        basic_documentdf = compile_document_text(text)
-        #     print("Creating dataframe...")
-        verbose_documentdf = text_to_bagofwords(basic_documentdf)
-        #     print("Extracting key words from text...")
-        recommend_df = join_and_condense(verbose_documentdf)
-        #     print("Compiling data...")
-        cosine_sim = vectorize_text(recommend_df)
-        #     print("Calculating similarities...")
-        recommended_jobs = recommend_100('resume', cosine_sim)
-        #     print("Retrieving top recommendations...")
-        recommendations = format_recommendations(recommended_jobs)
+        # print(file_path)
+        recommendations = final_rec(file_path)
         context['recommendations'] = recommendations
-    return render(request, 'rookieplays/recs.html', context)
+        # print("Recommendations is a " + str(type(recommendations)))
+        # print("This is the recommendations: " + str(recommendations))
+    return render(request, 'rookieplays/upload.html', context)
 
 def delete_document(request, pk):
     if request.method == 'POST':

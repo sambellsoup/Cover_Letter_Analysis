@@ -13,5 +13,12 @@
   <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
 {% endif %}
 </form>
+<p>Job Title Recommendations: </p>
+<ol>
+{% for rec in recommendations %}
+  <li>{{rec}}</li>
+{% endfor %}
+</ol>
+<h3>This is upload.html</h3>
 
 {% endblock %}

@@ -31,7 +31,7 @@ def compile_document_text(text):
     return basic_documentdf
 
 def text_to_bagofwords(basic_documentdf):
-    document_path = (r"C:\Users\sambe\Projects\Cover_Letter_Analysis\data\documents\ResumeBrittanyMouzoon.pdf")
+    # document_path = (r"C:\Users\sambe\Projects\Cover_Letter_Analysis\data\documents\ResumeBrittanyMouzoon.pdf")
 #     text = document_to_text(document_path)
 #     basic_documentdf = compile_document_text(text)
     basic_documentdf['rake_key_words'] = ''
@@ -63,8 +63,9 @@ def vectorize_text(recommend_df):
     cosine_sim = cosine_similarity(count_matrix, count_matrix)
     return cosine_sim
 
-def recommend_100(title, cosine_sim):
-    document_path = (r"C:\Users\sambe\Projects\Cover_Letter_Analysis\data\documents\ResumeBrittanyMouzoon.pdf")
+def recommend_100(file_path, title, cosine_sim):
+    # document_path = (r"C:\Users\sambe\Projects\Cover_Letter_Analysis\data\documents\ResumeBrittanyMouzoon.pdf")
+    document_path = file_path
     text = document_to_text(document_path)
     basic_documentdf = compile_document_text(text)
     verbose_documentdf = text_to_bagofwords(basic_documentdf)
@@ -92,8 +93,9 @@ def format_recommendations(recommended_jobs):
     jobs10 = list(jobs10)
     final_jobs10 = jobs10[0:10]
 
-    for i, item in enumerate(final_jobs10,1):
-        print(i, '. ' + item + '\n', sep='',end='')
+    # for i, item in enumerate(final_jobs10,1):
+        # print(i, '. ' + item + '\n', sep='',end='')
+    return final_jobs10
 
 def top_100_categories(recommended_jobs):
     df = pd.read_csv('data/job_descriptions.csv', index_col=0)
@@ -104,9 +106,9 @@ def top_100_categories(recommended_jobs):
     category_list = list(user_titles.category)
     return category_list
 
-def freq(category_list):
+def freq(document_path, category_list):
     frequency = []
-    document_path = (r"C:\Users\sambe\Projects\Cover_Letter_Analysis\data\documents\ResumeBrittanyMouzoon.pdf")
+    # document_path = (r"C:\Users\sambe\Projects\Cover_Letter_Analysis\data\documents\ResumeBrittanyMouzoon.pdf")
     text = document_to_text(document_path)
     basic_documentdf = compile_document_text(text)
     verbose_documentdf = text_to_bagofwords(basic_documentdf)
@@ -158,14 +160,31 @@ def analyze(document_path):
 #     print("Compiling data...")
     cosine_sim = vectorize_text(recommend_df)
 #     print("Calculating similarities...")
-    recommended_jobs = recommend_100('resume', cosine_sim)
+    recommended_jobs = recommend_100(document_path, 'resume', cosine_sim)
 #     print("Retrieving top recommendations...")
     top10 = format_recommendations(recommended_jobs)
 #     print("Formatting top recommendations...")
     category_list = top_100_categories(recommended_jobs)
 #     print("Retrieving relevant job categories...")
-    frequency = freq(category_list)
+    frequency = freq(document_path, category_list)
 #     print("Calculating the most common job categories...")
     names, size = viz_data(category_list, frequency)
 #     print("Compiling data...")
     strength_summary = make_viz(names, size)
+
+def final_rec(document_path):
+    # document_path = (r"C:\Users\sambe\Projects\Cover_Letter_Analysis\data\documents\ResumeBrittanyMouzoon.pdf")
+    text = document_to_text(document_path)
+#     print("Extracting text from document...")
+    basic_documentdf = compile_document_text(text)
+#     print("Creating dataframe...")
+    verbose_documentdf = text_to_bagofwords(basic_documentdf)
+#     print("Extracting key words from text...")
+    recommend_df = join_and_condense(verbose_documentdf)
+#     print("Compiling data...")
+    cosine_sim = vectorize_text(recommend_df)
+#     print("Calculating similarities...")
+    recommended_jobs = recommend_100(document_path, 'resume', cosine_sim)
+#     print("Retrieving top recommendations...")
+    recommendations = format_recommendations(recommended_jobs)
+    return recommendations
