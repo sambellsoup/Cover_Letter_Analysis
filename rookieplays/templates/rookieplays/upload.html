@@ -11,7 +11,7 @@
   <button type="submit">Upload & Analyze</button>
 {% if url %}
   <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
-{% endif %}
+
 </form>
 <p>Job Title Recommendations: </p>
 <ol>
@@ -19,6 +19,11 @@
   <li>{{rec}}</li>
 {% endfor %}
 </ol>
+
+<a href=""><button type="button" class="btn btn-primary" id="refresh">refresh page</button></a>
+{% endif %}
 <h3>This is upload.html</h3>
+
+
 
 {% endblock %}

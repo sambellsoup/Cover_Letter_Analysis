@@ -9,9 +9,11 @@ from django.conf.urls.static import static
 app_name = 'rookieplays'
 urlpatterns = [
     # Home page
-    path('', views.index, name='index'),
+    # path('', views.upload, name='index'),
 
-    path('recs/', views.upload, name='upload'),
+    path('', views.upload, name='upload'),
+
+    path('recs/', views.recs, name='recs'),
 
     # Show all topics
     path('topics/', views.topics, name='topics'),

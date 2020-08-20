@@ -9,7 +9,17 @@
   {% csrf_token %}
   <input type="file" name="document">
   <button type="submit">Upload & Analyze</button>
+{% if url %}
+  <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
+
 </form>
-<h3> This is recs.html</h3>
+<p>Job Title Recommendations: </p>
+<ol>
+{% for rec in recommendations %}
+  <li>{{rec}}</li>
+{% endfor %}
+</ol>
+{% endif %}
+<h3>This is recs.html</h3>
 
 {% endblock %}

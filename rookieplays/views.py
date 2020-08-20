@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from django.core.files.storage import FileSystemStorage
+from django.contrib import messages
 # from django.views.generic import TemplateView
 
 from .models import Topic, Entry
@@ -43,13 +44,14 @@ def index(request):
         context['recommendations'] = recommendations
         # print("Recommendations is a " + str(type(recommendations)))
         # print("This is the recommendations: " + str(recommendations))
-        return render(request, 'rookieplays/upload.html')
-    else:
-        return render(request, 'rookieplays/index.html', context)
+    return render(request, 'rookieplays/upload.html')
+    # else:
+        # return render(request, 'rookieplays/index.html', context)
 
-def upload(request):
+def recs(request):
     context = {}
     if request.method == 'POST':
+        # return render(request, 'rookieplays/upload.html', context)
         uploaded_file = request.FILES['document']
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
@@ -61,6 +63,28 @@ def upload(request):
         context['recommendations'] = recommendations
         # print("Recommendations is a " + str(type(recommendations)))
         # print("This is the recommendations: " + str(recommendations))
+        # return HttpResponseRedirect('views.index')
+        # return HttpResponseRedirect('upload/')
+    return render(request, 'rookieplays/recs.html', context)
+
+def upload(request):
+    context = {}
+    if request.method == 'POST':
+        # return render(request, 'rookieplays/recs.html', context)
+        uploaded_file = request.FILES['document']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        context['url'] = fs.url(name)
+        data_folder = Path("C:/Users/sambe/Projects/Cover_Letter_Analysis/data/documents/")
+        file_path = str(data_folder) + '\\'+  uploaded_file.name
+        # print(file_path)
+        recommendations = []
+        recommendations = final_rec(file_path)
+        context['recommendations'] = recommendations
+        # print("Recommendations is a " + str(type(recommendations)))
+        # print("This is the recommendations: " + str(recommendations))
+        # return HttpResponseRedirect('views.index')
+        # return HttpResponseRedirect('recs/')
     return render(request, 'rookieplays/upload.html', context)
 
 def delete_document(request, pk):
