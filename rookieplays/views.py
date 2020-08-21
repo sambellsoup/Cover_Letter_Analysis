@@ -36,8 +36,11 @@ def index(request):
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
+        print(context['url'])
         data_folder = Path("C:/Users/sambe/Projects/Cover_Letter_Analysis/data/documents/")
+        # uploaded_file.name is not updating! figure something else out to update the variable
         file_path = str(data_folder) + '\\' +  uploaded_file.name
+        print(file_path)
         # print(file_path)
         document_path = file_path
         recommendations = final_rec(file_path)
