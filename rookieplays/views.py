@@ -28,26 +28,26 @@ from pathlib import Path
 
 
 # Create your views here.
-def index(request):
-    """Rookieplay's Job Matchmaking"""
-    context = {}
-    if request.method == 'POST':
-        uploaded_file = request.FILES['document']
-        fs = FileSystemStorage()
-        name = fs.save(uploaded_file.name, uploaded_file)
-        context['url'] = fs.url(name)
-        print(context['url'])
-        data_folder = Path("C:/Users/sambe/Projects/Cover_Letter_Analysis/data/documents/")
+# def index(request):
+    # """Rookieplay's Job Matchmaking"""
+    # context = {}
+    # if request.method == 'POST':
+        # uploaded_file = request.FILES['document']
+        # fs = FileSystemStorage()
+        # name = fs.save(uploaded_file.name, uploaded_file)
+        # context['url'] = fs.url(name)
+        # print("this is the url being stored" + context['url'])
+        # data_folder = Path("C:/Users/sambe/Projects/Cover_Letter_Analysis/data/documents/")
         # uploaded_file.name is not updating! figure something else out to update the variable
-        file_path = str(data_folder) + '\\' +  uploaded_file.name
-        print(file_path)
+        # file_path = str(data_folder) + '\\' +  uploaded_file.name
+        # print("this is the file path" + str(file_path))
         # print(file_path)
-        document_path = file_path
-        recommendations = final_rec(file_path)
-        context['recommendations'] = recommendations
+        # document_path = file_path
+        # recommendations = final_rec(file_path)
+        # context['recommendations'] = recommendations
         # print("Recommendations is a " + str(type(recommendations)))
         # print("This is the recommendations: " + str(recommendations))
-    return render(request, 'rookieplays/upload.html')
+    # return render(request, 'rookieplays/upload.html')
     # else:
         # return render(request, 'rookieplays/index.html', context)
 
@@ -59,8 +59,10 @@ def recs(request):
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
+        print("this is the url being stored" + context['url'])
         data_folder = Path("C:/Users/sambe/Projects/Cover_Letter_Analysis/data/documents/")
         file_path = str(data_folder) + '\\'+  uploaded_file.name
+        print("this is the file path" + str(file_path))
         # print(file_path)
         recommendations = final_rec(file_path)
         context['recommendations'] = recommendations
@@ -78,11 +80,21 @@ def upload(request):
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
+        # print("this is the url being stored" + context['url'])
         data_folder = Path("C:/Users/sambe/Projects/Cover_Letter_Analysis/data/documents/")
         file_path = str(data_folder) + '\\'+  uploaded_file.name
+        # print("this is the file path" + str(file_path))
         # print(file_path)
-        recommendations = []
-        recommendations = final_rec(file_path)
+
+        # recommendations = []
+        text = document_to_text(file_path)
+        basic_documentdf = compile_document_text(text)
+        verbose_documentdf = text_to_bagofwords(basic_documentdf)
+        recommend_df = join_and_condense(verbose_documentdf)
+        cosine_sim = vectorize_text(recommend_df)
+        recommended_jobs = recommend_100(file_path, 'resume', cosine_sim)
+        recommendations = format_recommendations(recommended_jobs)
+        # recommendations = final_rec(file_path)
         context['recommendations'] = recommendations
         # print("Recommendations is a " + str(type(recommendations)))
         # print("This is the recommendations: " + str(recommendations))

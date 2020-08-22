@@ -106,6 +106,23 @@ def top_100_categories(recommended_jobs):
     category_list = list(user_titles.category)
     return category_list
 
+def freq(document_path, category_list):
+    frequency = []
+    # document_path = (r"C:\Users\sambe\Projects\Cover_Letter_Analysis\data\documents\ResumeBrittanyMouzoon.pdf")
+    text = document_to_text(document_path)
+    basic_documentdf = compile_document_text(text)
+    verbose_documentdf = text_to_bagofwords(basic_documentdf)
+    recommend_df = join_and_condense(verbose_documentdf)
+    cosine = vectorize_text(recommend_df)
+    title = 'resume'
+    recommended_jobs = recommend_100(document_path, title, cosine)
+    categories = top_100_categories(recommended_jobs)
+    # gives set of unique words
+    unique_words = set(categories)
+    for words in unique_words :
+        frequency.append(category_list.count(words))
+    return frequency
+
 def viz_data(category_list, frequency):
 #     categories = top_100_categories()
 #     frequency = freq(categories)
