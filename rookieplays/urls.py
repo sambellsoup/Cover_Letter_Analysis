@@ -13,8 +13,6 @@ urlpatterns = [
 
     path('', views.upload, name='upload'),
 
-    path('recs/', views.recs, name='recs'),
-
     # Show all topics
     path('topics/', views.topics, name='topics'),
 

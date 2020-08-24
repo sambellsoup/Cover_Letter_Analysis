@@ -11,7 +11,7 @@ from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 
 # recommendation packages
-from .text_processing import document_to_text, compile_document_text, text_to_bagofwords, join_and_condense, vectorize_text, recommend_100, format_recommendations, top_100_categories, freq, viz_data, make_viz, analyze, final_rec
+from .text_processing import document_to_text, compile_document_text, text_to_bagofwords, join_and_condense, vectorize_text, recommend_100, format_recommendations, top_100_categories, freq, viz_data, make_viz
 # from io import BytesIO
 # import base64
 import matplotlib
@@ -26,80 +26,25 @@ from sklearn.feature_extraction.text import CountVectorizer
 from pathlib import Path
 
 
-
-# Create your views here.
-# def index(request):
-    # """Rookieplay's Job Matchmaking"""
-    # context = {}
-    # if request.method == 'POST':
-        # uploaded_file = request.FILES['document']
-        # fs = FileSystemStorage()
-        # name = fs.save(uploaded_file.name, uploaded_file)
-        # context['url'] = fs.url(name)
-        # print("this is the url being stored" + context['url'])
-        # data_folder = Path("C:/Users/sambe/Projects/Cover_Letter_Analysis/data/documents/")
-        # uploaded_file.name is not updating! figure something else out to update the variable
-        # file_path = str(data_folder) + '\\' +  uploaded_file.name
-        # print("this is the file path" + str(file_path))
-        # print(file_path)
-        # document_path = file_path
-        # recommendations = final_rec(file_path)
-        # context['recommendations'] = recommendations
-        # print("Recommendations is a " + str(type(recommendations)))
-        # print("This is the recommendations: " + str(recommendations))
-    # return render(request, 'rookieplays/upload.html')
-    # else:
-        # return render(request, 'rookieplays/index.html', context)
-
-def recs(request):
-    context = {}
-    if request.method == 'POST':
-        # return render(request, 'rookieplays/upload.html', context)
-        uploaded_file = request.FILES['document']
-        fs = FileSystemStorage()
-        name = fs.save(uploaded_file.name, uploaded_file)
-        context['url'] = fs.url(name)
-        print("this is the url being stored" + context['url'])
-        data_folder = Path("C:/Users/sambe/Projects/Cover_Letter_Analysis/data/documents/")
-        file_path = str(data_folder) + '\\'+  uploaded_file.name
-        print("this is the file path" + str(file_path))
-        # print(file_path)
-        recommendations = final_rec(file_path)
-        context['recommendations'] = recommendations
-        # print("Recommendations is a " + str(type(recommendations)))
-        # print("This is the recommendations: " + str(recommendations))
-        # return HttpResponseRedirect('views.index')
-        # return HttpResponseRedirect('upload/')
-    return render(request, 'rookieplays/recs.html', context)
-
 def upload(request):
     context = {}
     if request.method == 'POST':
-        # return render(request, 'rookieplays/recs.html', context)
+        """File handling"""
         uploaded_file = request.FILES['document']
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
-        # print("this is the url being stored" + context['url'])
         data_folder = Path("C:/Users/sambe/Projects/Cover_Letter_Analysis/data/documents/")
-        file_path = str(data_folder) + '\\'+  uploaded_file.name
-        # print("this is the file path" + str(file_path))
-        # print(file_path)
-
-        # recommendations = []
-        text = document_to_text(file_path)
-        basic_documentdf = compile_document_text(text)
+        document_path = str(data_folder) + '\\'+  uploaded_file.name
+        """Recommendation functions"""
+        resume_text = document_to_text(document_path)
+        basic_documentdf = compile_document_text(resume_text)
         verbose_documentdf = text_to_bagofwords(basic_documentdf)
         recommend_df = join_and_condense(verbose_documentdf)
         cosine_sim = vectorize_text(recommend_df)
-        recommended_jobs = recommend_100(file_path, 'resume', cosine_sim)
-        recommendations = format_recommendations(recommended_jobs)
-        # recommendations = final_rec(file_path)
-        context['recommendations'] = recommendations
-        # print("Recommendations is a " + str(type(recommendations)))
-        # print("This is the recommendations: " + str(recommendations))
-        # return HttpResponseRedirect('views.index')
-        # return HttpResponseRedirect('recs/')
+        recommended_jobs = recommend_100(recommend_df, cosine_sim)
+        final_jobs10 = format_recommendations(recommended_jobs)
+        context['recommendations'] = final_jobs10
     return render(request, 'rookieplays/upload.html', context)
 
 def delete_document(request, pk):
