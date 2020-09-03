@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
@@ -24,6 +24,11 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 
 from pathlib import Path
+
+
+
+# def index(request):
+    # return HttpResponse("Hello, world. You're at the Rookieplay index.")
 
 
 def upload(request):

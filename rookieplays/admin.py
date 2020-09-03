@@ -2,8 +2,7 @@ from django.contrib import admin
 # from .models import StrengthSummary
 
 # Register your models here.
-from rookieplays.models import Topic, Entry
+from rookieplays.models import Document
 
-admin.site.register(Topic)
-admin.site.register(Entry)
+admin.site.register(Document)
 # admin.site.register(StrengthSummary)

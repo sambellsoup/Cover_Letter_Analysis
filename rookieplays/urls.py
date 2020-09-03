@@ -10,6 +10,7 @@ app_name = 'rookieplays'
 urlpatterns = [
     # Home page
     # path('', views.upload, name='index'),
+    # path('', views.index, name='index'),
 
     path('', views.upload, name='upload'),
 
