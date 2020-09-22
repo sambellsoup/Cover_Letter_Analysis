@@ -4,19 +4,16 @@
 {% block content %}
 
 <p>RookiePlay lets your resume speak for itself</p>
-<h2>Upload a resume or cover letter.</h2>
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  <input type="file" name="document">
-  <button type="submit">Upload & Analyze</button>
 {% if url %}
   <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
-
+  
 </form>
 <p>Job Title Recommendations: </p>
 <ol>
 {% for rec in recommendations %}
   <li>{{rec}}</li>
+  <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+<label for="choice{{ forloop.counter }}">{{ rec }}</label><br>
 {% endfor %}
 </ol>
 {% endif %}

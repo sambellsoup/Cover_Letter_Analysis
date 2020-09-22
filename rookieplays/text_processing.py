@@ -69,13 +69,14 @@ def format_recommendations(recommendations):
     for job in recommendations:
         job = job.lower().replace("_", " ").title()
         job = job.replace('Hr Manager', 'HR Manager')
+        job = job.replace('Care Giver / Hha / Cna', 'Care Giver')
         jobs10.append(job)
-    jobs10 = set(jobs10[0:30])
-    jobs10 = list(jobs10)
-    final_jobs10 = jobs10[0:10]
+    jobs10 = set(jobs10[0:100])
+    format_jobs = list(jobs10)
+    # final_jobs10 = jobs10[0:3]
     # for i, item in enumerate(final_jobs10, 1):
         # print(i, '. ' + item + '\n', sep='',end='')
-    return final_jobs10
+    return format_jobs
 
 def top_100_categories(recommendations):
     df = pd.read_csv('data/job_descriptions.csv', index_col=0)

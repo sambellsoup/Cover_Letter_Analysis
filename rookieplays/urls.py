@@ -14,6 +14,8 @@ urlpatterns = [
 
     path('', views.upload, name='upload'),
 
+    # path('recs/', views.thumbs_up, name='thumbs_up'),
+
     # Show all topics
     path('topics/', views.topics, name='topics'),
 

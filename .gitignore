@@ -10,3 +10,5 @@ __pycache__/
 
 rookieplay/passwords.py
 rookieplay/settings.py
+
+heroku/

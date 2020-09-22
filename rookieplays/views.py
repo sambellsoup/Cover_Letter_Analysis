@@ -26,9 +26,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from pathlib import Path
 
 
-
-# def index(request):
-    # return HttpResponse("Hello, world. You're at the Rookieplay index.")
+## This list can be temporary, but should be part of the data associated with an account in the future
+thumbs_down_list = []
 
 
 def upload(request):
@@ -48,9 +47,22 @@ def upload(request):
         recommend_df = join_and_condense(verbose_documentdf)
         cosine_sim = vectorize_text(recommend_df)
         recommended_jobs = recommend_100(recommend_df, cosine_sim)
-        final_jobs10 = format_recommendations(recommended_jobs)
-        context['recommendations'] = final_jobs10
+        final_jobs = format_recommendations(recommended_jobs)
+        n = 0
+        context['recommendation_0'] = final_jobs[n]
+        context['recommendation_1'] = final_jobs[n+1]
+        context['recommendation_2'] = final_jobs[n+2]
     return render(request, 'rookieplays/upload.html', context)
+
+# def thumbs_up(request):
+    # if(request.GET.get('thumbs_up')):
+        # job_title = job_title.lower()
+        # thumbs_down_list.append(job_title)
+        # recommended_jobs = [job for job in recommended_jobs if job != job_title]
+        # final_jobs10 = format_recommendations(recommended_jobs)
+        # context['recommendations'] = final_jobs10
+    # return render(request, 'rookieplays/upload.html', context)
+
 
 def delete_document(request, pk):
     if request.method == 'POST':
