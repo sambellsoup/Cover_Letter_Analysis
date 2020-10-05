@@ -10,12 +10,14 @@
 
 <p>RookiePlay lets your resume speak for itself</p>
 <h2>Upload a resume or cover letter.</h2>
-<form method="post" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <input type="file" name="document">
   <button type="submit">Upload & Analyze</button>
-  <p>Please allow the system to process your document for up to 15 seconds.</p>
 </form>
+  <p>Please allow the system to process your document for up to 15 seconds.</p>
+
+
 {% if url %}
   <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
 
@@ -23,27 +25,75 @@
 <p>Job Title Recommendations: </p>
 <ol>
 
-  <ul id="menu">{{recommendation_0}}</ul>
-<form action="/feedback/" method= "get">
+  <ul id="menu0">{{recommendations.0}}</ul>
+
+    <input id="Thumbs-Up-0" type="button" value="Thumbs Up" name = "Thumbs-Up" onclick=""/>
+    <input id="Thumbs-Down-0" type="button" value="Thumbs Down" name = "Thumbs-Down"/>
+
+
+
+  <ul id="menu1">{{recommendations.1}}</ul>
     <input id="Thumbs-Up-1" type="button" value="Thumbs Up"/>
     <input id="Thumbs-Down-1" type="button" value="Thumbs Down"/>
 
 
-  <ul id="menu">{{recommendation_1}}</ul>
+  <ul id="menu2">{{recommendations.2}}</ul>
     <input id="Thumbs-Up-2" type="button" value="Thumbs Up"/>
     <input id="Thumbs-Down-2" type="button" value="Thumbs Down"/>
-
-
-  <ul id="menu">{{recommendation_2}}</ul>
-    <input id="Thumbs-Up-3" type="button" value="Thumbs Up"/>
-    <input id="Thumbs-Down-3" type="button" value="Thumbs Down"/>
 
 </ol>
 
 <a href=""><button type="button" class="btn btn-primary" id="refresh">refresh page</button></a>
-{% endif %}
-</form>
 
+<p id="demo"></p>
+
+  <script>
+
+    var text;
+    fruits = ["Banana", "Orange", "Apple", "Mango"];
+    var jobs = {{recommendations | safe}};
+    jobs.splice(0, 3)
+
+    text = "<ul>";
+    fruits.forEach(myFunction);
+    text += "</ul>";
+    text += jobs + "<br>"
+    text += jobs[0] + "<br>"
+    text += jobs[1] + "<br>"
+    text += jobs[2] + "<br>"
+    document.getElementById("demo").innerHTML = text;
+
+    function myFunction(value) {
+      text += "<li>" + value + "</li>";
+    }
+
+    function thumbsdown(value){
+
+    }
+
+    var whatsit = "{{ what }}"
+
+
+
+
+
+
+console.log(jobs);
+// typeof jobs
+// jobs.forEach(print_jobs);
+
+function print_jobs(value){
+  console.log(value);
+}
+
+
+  </script>
+
+{% endif %}
+
+
+
+</body>
 
 
 {% endblock %}

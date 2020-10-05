@@ -48,11 +48,22 @@ def upload(request):
         cosine_sim = vectorize_text(recommend_df)
         recommended_jobs = recommend_100(recommend_df, cosine_sim)
         final_jobs = format_recommendations(recommended_jobs)
-        n = 0
-        context['recommendation_0'] = final_jobs[n]
-        context['recommendation_1'] = final_jobs[n+1]
-        context['recommendation_2'] = final_jobs[n+2]
+
+
+        context['recommendations'] = final_jobs
+        context['recommendation_0'] = final_jobs[0]
+        # final_jobs.pop(0)
+        context['recommendation_1'] = final_jobs[1]
+        # final_jobs.pop(0)
+        context['recommendation_2'] = final_jobs[2]
+
+        # final_jobs.pop(0)
     return render(request, 'rookieplays/upload.html', context)
+
+"""
+Thumbs up will add this job title to the thumbs up list, and then provide links to live job ads.
+Thumbs down will add this job title to the thumbs down list, and remove this job title from the job recommendation list
+"""
 
 # def thumbs_up(request):
     # if(request.GET.get('thumbs_up')):
