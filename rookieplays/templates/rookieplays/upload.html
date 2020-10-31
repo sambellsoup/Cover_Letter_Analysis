@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" href="mystyle.css">
   <meta charset="utf-8">
-<title>Rookieplay--Upload</title>
+  <title>Rookieplay--Upload</title>
+
+
+
 </head>
 {% extends 'rookieplays/base.html' %}
 <body>
@@ -19,78 +23,248 @@
 
 
 {% if url %}
-  <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
+
+{% load static %}
+<script src="{% static 'rookieplay/main.js' %}"></script>
 
 
-<p>Job Title Recommendations: </p>
-<ol>
-
-  <ul id="menu0">{{recommendations.0}}</ul>
-
-    <input id="Thumbs-Up-0" type="button" value="Thumbs Up" name = "Thumbs-Up" onclick=""/>
-    <input id="Thumbs-Down-0" type="button" value="Thumbs Down" name = "Thumbs-Down"/>
+<script>
+  var text;
+  var jobs = {{recommendations | safe}};
+  var jobs_bank = {{recommendations | safe}};
+  jobs_bank.splice(0, 3)
 
 
+  const thumbs_down_list = [];
+  const thumbs_up_list = [];
 
-  <ul id="menu1">{{recommendations.1}}</ul>
-    <input id="Thumbs-Up-1" type="button" value="Thumbs Up"/>
-    <input id="Thumbs-Down-1" type="button" value="Thumbs Down"/>
+  function myFunction(value) {
+    text += "<li>" + value + "</li>";
+  }
+
+      // add job to list
+      // send next job title in the jobs list to whichever menu was downvoted //
+  function thumbsdown(key){
+    if (key === 0){
+      thumbs_down_list.push(jobs[0]);
+      jobs[0] = jobs_bank[0];
+      document.getElementById("menu0").innerHTML = jobs_bank[0];
+      jobs_bank.splice(0, 1);
+    }
+
+    if (key === 1){
+      thumbs_down_list.push(jobs[1]);
+      jobs[1] = jobs_bank[0];
+      document.getElementById("menu1").innerHTML = jobs_bank[0];
+      jobs_bank.splice(0, 1);
+    }
+
+    if (key === 2){
+      thumbs_down_list.push(jobs[2]);
+      jobs[2] = jobs_bank[0]
+      document.getElementById("menu2").innerHTML = jobs_bank[0];
+      jobs_bank.splice(0, 1);
+    }
+  // console.log("Jobs Bank: " + jobs_bank)
+  // console.log("Thumbs Downs " + thumbs_down_list)
+  // console.log("Thumbs Up " + thumbs_up_list)
+  // console.log(jobs[0])
+  // console.log(jobs[1])
+  // console.log(jobs[2])
+  }
 
 
-  <ul id="menu2">{{recommendations.2}}</ul>
-    <input id="Thumbs-Up-2" type="button" value="Thumbs Up"/>
-    <input id="Thumbs-Down-2" type="button" value="Thumbs Down"/>
+  // console.log("Jobs Bank: " + jobs_bank)
+  // console.log("Thumbs Downs " + thumbs_down_list)
+  // console.log("Thumbs Up " + thumbs_up_list)
+  // console.log(jobs[0])
+  // console.log(jobs[1])
+  // console.log(jobs[2])
 
-</ol>
 
+
+</script>
+
+<p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
+
+
+<h2>Job Title Recommendations: </h2>
+
+
+  <div id="menu0">{{recommendations.0}}</div>
+  <button type="button" name="thumbs-up-0" id="thumbs-up-0" class="btn btn-success btn-lg" onclick="thumbsup(0);">Thumbs Up</button>
+  <button type="button" name="thumbs-down-0" id="thumbs-down-0" class="btn btn-danger btn-lg" onclick="thumbsdown(0);">Thumbs Down</button>
+
+
+  <div id="menu1">{{recommendations.1}}</div>
+  <button type="button" name="thumbs-up-1" id="thumbs-up-1" class="btn btn-success btn-lg" onclick="thumbsup(1);">Thumbs Up</button>
+  <button type="button" name="thumbs-down-1" id="thumbs-down-1" class="btn btn-danger btn-lg" onclick="thumbsdown(1);">Thumbs Down</button>
+
+
+  <div id="menu2">{{recommendations.2}}</div>
+  <button type="button" name="thumbs-up-2" id="thumbs-up-2" class="btn btn-success btn-lg" onclick="thumbsup(2);">Thumbs Up</button>
+  <button type="button" name="thumbs-down-2" id="thumbs-down-2" class="btn btn-danger btn-lg" onclick="thumbsdown(2);">Thumbs Down</button>
+
+
+
+<br></br>
 <a href=""><button type="button" class="btn btn-primary" id="refresh">refresh page</button></a>
+<br></br>
 
-<p id="demo"></p>
-
-  <script>
-
-    var text;
-    fruits = ["Banana", "Orange", "Apple", "Mango"];
-    var jobs = {{recommendations | safe}};
-    jobs.splice(0, 3)
-
-    text = "<ul>";
-    fruits.forEach(myFunction);
-    text += "</ul>";
-    text += jobs + "<br>"
-    text += jobs[0] + "<br>"
-    text += jobs[1] + "<br>"
-    text += jobs[2] + "<br>"
-    document.getElementById("demo").innerHTML = text;
-
-    function myFunction(value) {
-      text += "<li>" + value + "</li>";
-    }
-
-    function thumbsdown(value){
-
-    }
-
-    var whatsit = "{{ what }}"
+<div class = "container">
+<div class="panel group">
+<div class="container-fluid">
+  <div id="demo0" class="panel panel-primary">
+    <div id="demoa0" class="panel-heading">
+          </div>
+    <div id="demob0" class="panel-body">
+          </div>
+    <div id="demoba0" class="panel-body">
+          </div>
+    <div id="demobb0" class="panel-body">
+          </div>
+    <div id="demobc0" class="panel-body">
+          </div>
+  </div>
+</div>
 
 
 
+  <div id="demo1" class="panel panel-primary">
+    <div id="demoa1" class="panel-heading">
+    </div>
+    <div id="demob1" class="panel-body">
+    </div>
+  </div>
 
 
+  <div id="demo2" class="panel panel-primary">
+    <div id="demoa2" class="panel-heading">
+    </div>
+    <div id="demob2" class="panel-body">
+    </div>
+  </div>
 
-console.log(jobs);
-// typeof jobs
-// jobs.forEach(print_jobs);
+  <div id="demo3" class="panel panel-primary">
+    <div id="demoa3" class="panel-heading">
+    </div>
+    <div id="demob3" class="panel-body">
+    </div>
+  </div>
 
-function print_jobs(value){
-  console.log(value);
-}
+  <div id="demo4" class="panel panel-primary">
+    <div id="demoa4" class="panel-heading">
+    </div>
+    <div id="demob4" class="panel-body">
+    </div>
+  </div>
+
+  <div id="demo5" class="panel panel-primary">
+    <div id="demoa5" class="panel-heading">
+    </div>
+    <div id="demob5" class="panel-body">
+    </div>
+  </div>
+
+  <div id="demo6" class="panel panel-primary">
+    <div id="demoa6" class="panel-heading">
+    </div>
+    <div id="demob6" class="panel-body">
+    </div>
+  </div>
+
+  <div id="demo7" class="panel panel-primary">
+    <div id="demoa7" class="panel-heading">
+    </div>
+    <div id="demob7" class="panel-body">
+    </div>
+  </div>
+
+  <div id="demo8" class="panel panel-primary">
+    <div id="demoa8" class="panel-heading">
+    </div>
+    <div id="demob8" class="panel-body">
+    </div>
+  </div>
+
+  <div id="demo9" class="panel panel-primary">
+    <div id="demoa9" class="panel-heading">
+    </div>
+    <div id="demob9" class="panel-body">
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+  $(function() {
+
+    $('#demo0').on('click', function() {
+      $('#demob0').slideToggle(200);
+    });
+});
+
+  $(function() {
+
+    $('#demo1').on('click', function() {
+      $('#demob1').slideToggle(200);
+    });
+  });
+
+  $(function() {
+
+    $('#demo2').on('click', function() {
+      $('#demob2').slideToggle(200);
+    });
+  });
+
+  $(function(){
+
+    $('#demo3').on('click', function() {
+      $('#demob3').slideToggle(200);
+    });
+});
+
+  $(function(){
+    $('#demo4').on('click', function() {
+      $('#demob4').slideToggle(200);
+    });
+  });
+
+  $(function(){
+    $('#demo5').on('click', function() {
+      $('#demob5').slideToggle(200);
+    });
+  });
+
+  $(function(){
+    $('#demo6').on('click', function() {
+      $('#demob6').slideToggle(200);
+    });
+  });
 
 
-  </script>
+$(function(){
+    $('#demo7').on('click', function() {
+      $('#demob7').slideToggle(200);
+    });
+  });
+
+$(function(){
+    $('#demo8').on('click', function() {
+      $('#demob8').slideToggle(200);
+    });
+  });
+
+  $(function(){
+    $('#demo9').on('click', function() {
+      $('#demob9').slideToggle(200);
+    });
+});
+
+</script>
 
 {% endif %}
-
 
 
 </body>

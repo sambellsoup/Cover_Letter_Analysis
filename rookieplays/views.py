@@ -25,6 +25,11 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 from pathlib import Path
 
+# Job Search API
+from serpapi import GoogleSearchResults
+
+from time import time
+
 
 ## This list can be temporary, but should be part of the data associated with an account in the future
 thumbs_down_list = []
@@ -57,7 +62,28 @@ def upload(request):
         # final_jobs.pop(0)
         context['recommendation_2'] = final_jobs[2]
 
+    if request.is_ajax():
+        text = request.GET.get('button_text')
+        test = 'test'
+        print()
+        print(text)
+        print()
+        print('test')
+
+
+   # if request.method == 'GET':
+        # text = request.GET.get('button_text')
+        # print()
+        # print(text)
+        # print()
+
+
+
         # final_jobs.pop(0)
+    # if thumbs up button clicked:
+        # scrape jobs related to that job title
+        # put jobs in dictionary with keys of
+        # job title, company, link to job application, description, date posted, location, full-time/part-time, remote?
     return render(request, 'rookieplays/upload.html', context)
 
 """

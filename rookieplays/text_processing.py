@@ -5,6 +5,8 @@ from rake_nltk import Rake
 from tika import parser
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
+import pickle
+
 
 def document_to_text(document_path):
     parsed = parser.from_file(document_path)
@@ -18,7 +20,9 @@ def document_to_text(document_path):
     return text
 
 def compile_document_text(text):
-    job_descriptions = pd.read_csv('data/job_descriptions.csv', index_col=0)
+    # job_descriptions = pd.read_csv('data/job_descriptions.csv', index_col=0)
+    with open('rookieplays/pkl/job_descriptions.pkl', 'rb') as f:
+        job_descriptions = pickle.load(f)
     data = [['resume', text]]
     basic_documentdf = pd.DataFrame(data, columns = ['title', 'description'])
     return basic_documentdf
@@ -40,7 +44,9 @@ def text_to_bagofwords(df):
     return verbose_documentdf
 
 def join_and_condense(df):
-    job_descriptions = pd.read_csv('data/job_descriptions.csv', index_col=0)
+    # job_descriptions = pd.read_csv('data/job_descriptions.csv', index_col=0)
+    with open('rookieplays/pkl/job_descriptions.pkl', 'rb') as f:
+        job_descriptions = pickle.load(f)
     job_descriptions = job_descriptions.append(df)
     recommend_df = job_descriptions[['title', 'bag_of_words']]
     recommend_df = recommend_df.reset_index(drop=True)
@@ -79,7 +85,9 @@ def format_recommendations(recommendations):
     return format_jobs
 
 def top_100_categories(recommendations):
-    df = pd.read_csv('data/job_descriptions.csv', index_col=0)
+    # df = pd.read_csv('data/job_descriptions.csv', index_col=0)
+    with open('rookieplays/pkl/job_descriptions.pkl', 'rb') as f:
+        df = pickle.load(f)
     user_titles = df[df.title.isin(recommendations)]
     user_titles = user_titles[['title', 'category']]
     category_list = list(user_titles.category)

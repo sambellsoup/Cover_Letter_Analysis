@@ -1,7 +1,9 @@
 asgiref==3.2.10
 awsebcli==3.18.2
-boto3==1.14.52
-botocore==1.15.49
+beautifulsoup4==4.9.3
+boto3==1.11.5
+botocore==1.14.17
+bs4==0.0.1
 cement==2.8.2
 certifi==2020.6.20
 chardet==3.0.4
@@ -12,11 +14,13 @@ dj-database-url==0.5.0
 dj-static==0.0.6
 Django==3.1.1
 django-bootstrap3==14.1.0
+django-heroku==0.3.1
 django-matplotlib==0.1
 django-s3direct==1.1.8
 django-storages==1.10.1
 docutils==0.15.2
 future==0.16.0
+google-search-results==1.8.3
 gunicorn==20.0.4
 idna==2.7
 importlib-metadata==1.7.0
@@ -26,10 +30,13 @@ kiwisolver==1.2.0
 matplotlib==3.3.0
 nginx==0.0.1
 nltk==3.5
+nodejs==0.1.1
 numpy==1.19.1
+optional-django==0.1.0
 pandas==1.1.0
 pathspec==0.5.9
 Pillow==7.2.0
+psycopg2==2.8.6
 pyparsing==2.4.7
 python-dateutil==2.8.0
 pytz==2020.1
@@ -43,6 +50,7 @@ scipy==1.5.2
 semantic-version==2.5.0
 six==1.11.0
 sklearn==0.0
+soupsieve==2.0.1
 sqlparse==0.3.1
 static3==0.7.0
 termcolor==1.1.0

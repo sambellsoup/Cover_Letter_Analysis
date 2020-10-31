@@ -1,10 +1,11 @@
 """Defines URL patterns for Rookieplay App document analytics functionality"""
 
-from django.conf.urls import url
+from django.conf.urls import include, url
 from . import views
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib  import admin
 
 app_name = 'rookieplays'
 urlpatterns = [
