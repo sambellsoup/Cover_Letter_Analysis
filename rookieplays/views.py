@@ -62,13 +62,13 @@ def upload(request):
         # final_jobs.pop(0)
         context['recommendation_2'] = final_jobs[2]
 
-    if request.is_ajax():
-        text = request.GET.get('button_text')
-        test = 'test'
-        print()
-        print(text)
-        print()
-        print('test')
+    # if request.is_ajax():
+    # text = request.GET.get('button_text')
+        # test = 'test'
+        # print()
+        # print(text)
+        # print()
+        # print('test')
 
 
    # if request.method == 'GET':
