@@ -58,7 +58,7 @@ threadpoolctl==2.1.0
 tika==1.24
 tqdm==4.48.0
 urllib3==1.24.3
-waitress==1.4.4
+waitress==2.1.1
 wcwidth==0.1.9
 whitenoise==5.1.0
 zipp==3.1.0
